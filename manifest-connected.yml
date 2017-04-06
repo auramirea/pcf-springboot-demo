@@ -1,5 +1,5 @@
 applications:
-- name: pcf-springboot-demo
+- name: auras-pcf-springboot-demo
   timeout: 180
   memory: 256M
   disk_quota: 512M

@@ -1,16 +1,9 @@
 ---
-resource_types:
-- name: slack-notification
-  type: docker-image
-  source:
-    repository: cfcommunity/slack-notification-resource
-    tag: latest
-
 resources:
 - name: pcf-springboot-demo-source
   type: git
   source:
-    uri: https://github.com/benwilcock/pcf-springboot-demo
+    uri: https://github.com/auramirea/pcf-springboot-demo
     branch: master
 
 - name: push-to-pcf
@@ -25,12 +18,6 @@ resources:
 - name: timer
   type: time
   source: {interval: 24h}
-
-- name: slack-alert
-  type: slack-notification
-  source:
-    url: {{webhook}}
-    insecure: true
 
 jobs:
 - name: unit-test
@@ -88,10 +75,6 @@ jobs:
     file: pcf-springboot-demo-source/ci/tasks/web-test-connected.yml
     params:
       URL: http://pcf-springboot-demo.cfapps.io
-  - put: slack-alert
-    params:
-      text: |
-        The web test for $BUILD_PIPELINE_NAME.$BUILD_JOB_NAME has passed!
 
 - name: test-disconnected
   public: true
@@ -106,7 +89,4 @@ jobs:
     file: pcf-springboot-demo-source/ci/tasks/web-test-disconnected.yml
     params:
       URL: http://pcf-springboot-demo-disconnected.cfapps.io
-  - put: slack-alert
-    params:
-      text: |
-        The web test for $BUILD_PIPELINE_NAME.$BUILD_JOB_NAME has passed!
+  
