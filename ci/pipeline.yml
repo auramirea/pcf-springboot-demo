@@ -14,6 +14,7 @@ resources:
     password: {{cf-password}}
     organization: {{cf-org}}
     space: {{cf-space}}
+    skip_cert_check: true
 
 - name: timer
   type: time
@@ -51,7 +52,6 @@ jobs:
   plan:
   - get: pcf-springboot-demo-source
     trigger: true
-    passed: [unit-test]
   - get: timer
     trigger: true
     passed: [unit-test]
